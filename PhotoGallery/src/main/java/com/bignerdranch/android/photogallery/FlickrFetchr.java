@@ -26,6 +26,7 @@ public class FlickrFetchr {
 
     private static final String PARAM_EXTRAS = "extras";
     private static final String EXTRAS_SMALL_URL = "url_s";
+    private static final String PARAM_PAGE = "page";
     private static final String XML_PHOTO = "photo";
     byte[] getUrlBytes(String urlSpec) throws IOException{
         URL url = new URL(urlSpec);
@@ -55,7 +56,7 @@ public class FlickrFetchr {
         return new String(getUrlBytes(urlSpec));
     }
 
-    public ArrayList<GalleryItem> fetchItems(){
+    public ArrayList<GalleryItem> fetchItems(Integer page){
 
         ArrayList<GalleryItem> items = new ArrayList<GalleryItem>();
         try{
@@ -63,6 +64,7 @@ public class FlickrFetchr {
                     .appendQueryParameter("method", METHOD_GET_RECENT)
                     .appendQueryParameter("api_key", API_KEY)
                     .appendQueryParameter(PARAM_EXTRAS,EXTRAS_SMALL_URL)
+                    .appendQueryParameter(PARAM_PAGE, page.toString())
                     .build().toString();
             String xmlString = getUrl(url);
             Log.i(TAG, "Received xml: " + xmlString);
